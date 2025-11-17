@@ -1,0 +1,13 @@
+
+{
+  "name":"FitTracker v4 Pro",
+  "short_name":"FitTracker v4",
+  "start_url":"./index.html",
+  "display":"standalone",
+  "background_color":"#0a0a11",
+  "theme_color":"#9D4CFF",
+  "icons":[
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"}
+  ]
+}

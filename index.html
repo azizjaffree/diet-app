@@ -1,0 +1,51 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FitTracker v4 Pro</title>
+<link rel="stylesheet" href="style.css"/>
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<div id="userOverlay" class="overlay glass">
+  <div class="overlay-box">
+    <h2>Select User</h2>
+    <button class="user-btn" data-user="Aziz">Aziz</button>
+    <button class="user-btn" data-user="Yasmin">Yasmin</button>
+  </div>
+</div>
+
+<header class="topbar glass">
+  <div class="title">FitTracker v4 Pro</div>
+  <button id="openDrawer" class="menu-btn">☰</button>
+</header>
+
+<nav class="bottom-nav glass">
+  <button data-tab="food" class="nav-btn active">🍽️<span>Food</span></button>
+  <button data-tab="exercise" class="nav-btn">🏋️<span>Exercise</span></button>
+  <button data-tab="analysis" class="nav-btn">📊<span>Analysis</span></button>
+  <button data-tab="profile" class="nav-btn">👤<span>Profile</span></button>
+</nav>
+
+<div id="drawer" class="drawer glass">
+  <h3>Menu</h3>
+  <button class="drawer-item" id="switchUser">Switch User</button>
+  <button class="drawer-item">Export Data</button>
+  <button class="drawer-item">Import Data</button>
+  <button class="drawer-item">Settings</button>
+  <button class="drawer-item close">Close</button>
+</div>
+
+<main class="content">
+  <section id="food" class="page active glass"><h2>Food</h2></section>
+  <section id="exercise" class="page glass"><h2>Exercise</h2></section>
+  <section id="analysis" class="page glass"><h2>Analysis</h2></section>
+  <section id="profile" class="page glass"><h2>Profile</h2></section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
