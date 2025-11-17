@@ -1,51 +1,79 @@
-
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>FitTracker v4 Pro</title>
-<link rel="stylesheet" href="style.css"/>
-<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="style.css" />
+<link rel="manifest" href="manifest.json" />
 </head>
+
 <body>
 
-<div id="userOverlay" class="overlay glass">
-  <div class="overlay-box">
+<!-- ================= USER SELECT OVERLAY ================= -->
+<div id="userOverlay" class="overlay glass full-center">
+  <div class="overlay-box glass">
     <h2>Select User</h2>
-    <button class="user-btn" data-user="Aziz">Aziz</button>
-    <button class="user-btn" data-user="Yasmin">Yasmin</button>
+    <div class="user-select-row">
+      <button class="user-btn" data-user="Aziz">Aziz</button>
+      <button class="user-btn" data-user="Yasmin">Yasmin</button>
+    </div>
   </div>
 </div>
 
-<header class="topbar glass">
-  <div class="title">FitTracker v4 Pro</div>
-  <button id="openDrawer" class="menu-btn">☰</button>
-</header>
+<!-- ================= MAIN APP CONTAINER ================= -->
+<div id="appContainer">
 
-<nav class="bottom-nav glass">
-  <button data-tab="food" class="nav-btn active">🍽️<span>Food</span></button>
-  <button data-tab="exercise" class="nav-btn">🏋️<span>Exercise</span></button>
-  <button data-tab="analysis" class="nav-btn">📊<span>Analysis</span></button>
-  <button data-tab="profile" class="nav-btn">👤<span>Profile</span></button>
-</nav>
+  <!-- ================= TOP BAR ================= -->
+  <header class="topbar glass">
+    <div id="profileTag" class="profile-tag">User: —</div>
+    <div class="top-right">
+      <input id="datePicker" type="date" class="date-input" />
+      <button id="openDrawer" class="menu-btn">☰</button>
+    </div>
+  </header>
 
-<div id="drawer" class="drawer glass">
-  <h3>Menu</h3>
-  <button class="drawer-item" id="switchUser">Switch User</button>
-  <button class="drawer-item">Export Data</button>
-  <button class="drawer-item">Import Data</button>
-  <button class="drawer-item">Settings</button>
-  <button class="drawer-item close">Close</button>
-</div>
+  <!-- ================= BOTTOM NAV ================= -->
+  <nav class="bottom-nav glass">
+    <button class="nav-btn active" data-tab="food">
+      🍽️
+      <span>Food</span>
+    </button>
+    <button class="nav-btn" data-tab="exercise">
+      🏋️
+      <span>Exercise</span>
+    </button>
+    <button class="nav-btn" data-tab="analysis">
+      📊
+      <span>Analysis</span>
+    </button>
+    <button class="nav-btn" data-tab="profile">
+      👤
+      <span>Profile</span>
+    </button>
+  </nav>
 
-<main class="content">
-  <section id="food" class="page active glass"><h2>Food</h2></section>
-  <section id="exercise" class="page glass"><h2>Exercise</h2></section>
-  <section id="analysis" class="page glass"><h2>Analysis</h2></section>
-  <section id="profile" class="page glass"><h2>Profile</h2></section>
-</main>
+  <!-- ================= SIDE DRAWER ================= -->
+  <div id="drawer" class="drawer glass">
+    <h3>Menu</h3>
 
-<script src="app.js"></script>
-</body>
-</html>
+    <button class="drawer-item" id="switchUser">Switch User</button>
+    <button class="drawer-item">Export Data</button>
+    <button class="drawer-item">Import Data</button>
+    <button class="drawer-item">Settings</button>
+
+    <button class="drawer-item close" id="closeDrawer">Close</button>
+  </div>
+
+  <!-- ================= MAIN CONTENT AREA ================= -->
+  <main class="content">
+
+    <!-- ================= FOOD PAGE ================= -->
+    <section id="food" class="page active glass">
+      <h2 class="page-title">Food</h2>
+
+      <div id="foodContent" class="page-inner">
+        <!-- JS will populate daily meals here -->
+      </div>
+    </section>
