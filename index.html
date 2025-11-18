@@ -1,808 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>FitTracker — clean v4</title>
-<meta name="description" content="10-week fat-loss tracker — Aziz & Yasmin" />
-<link rel="icon" href="data:," />
-<style>
-  /* =========================
-     Clean dark theme (single-file)
-     ========================= */
-  :root{
-    --bg:#05060a; --panel:#071127; --muted:#9aa6bd; --accent:#7c5cff; --accent2:#ffd24d;
-    --card:#0b1220; --glass: rgba(255,255,255,0.03); --radius:14px; --pad:14px;
-    --text:#eef2ff;
-  }
-  html,body{height:100%;margin:0;font-family:Inter, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;background:linear-gradient(180deg,#03040a 0%, #041025 100%);color:var(--text);-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:980px;margin:18px auto;padding:12px}
-  header{display:flex;flex-direction:column;gap:12px}
-  h1{margin:0;font-size:20px;text-align:center}
-  .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .profile-tag{font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
-  .small{color:var(--muted);font-size:13px}
-  input[type="date"]{padding:8px 10px;border-radius:10px;border:0;background:var(--card);color:var(--text)}
-  /* banner */
-  .banner{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg,#071026,#04101a);box-shadow:0 8px 30px rgba(2,8,30,0.6);gap:12px}
-  .pill-row{display:flex;gap:10px;justify-content:center;margin-top:10px}
-  .pill{background:linear-gradient(180deg,#071427,#03101a);padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-weight:700}
-  .pill.active{box-shadow:0 10px 30px rgba(124,92,255,0.12);border-color:rgba(124,92,255,0.18)}
-  /* panels */
-  .panel{background:linear-gradient(180deg, rgba(7,12,20,0.6), rgba(6,10,18,0.55));padding:18px;border-radius:12px;margin-top:12px;border:1px solid rgba(255,255,255,0.02)}
-  .meal-block{padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);margin-bottom:12px;border:1px solid rgba(255,255,255,0.02)}
-  .meal-title{font-weight:800;margin-bottom:6px}
-  .option{display:flex;align-items:center;justify-content:space-between;padding:8px 6px;border-radius:8px;margin-bottom:6px;background:rgba(255,255,255,0.01)}
-  .option .left{display:flex;gap:10px;align-items:center}
-  .cal{color:var(--accent);font-weight:700}
-  .small-input{padding:8px;border-radius:8px;border:0;background:#071427;color:#fff}
-  .row{display:flex;gap:10px;align-items:center}
-  /* exercises */
-  .ex-item{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;margin-bottom:10px}
-  .sets-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-  .set{background:#051026;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:8px;align-items:center}
-  .set input[type="number"], .set input[type="text"]{width:72px;padding:6px;border-radius:6px;border:0;background:#081524;color:#fff}
-  label.opt-checkbox{display:flex;align-items:center;gap:8px}
-  /* analysis */
-  .analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  canvas{background:transparent;border-radius:8px}
-  textarea{width:100%;height:88px;padding:8px;border-radius:8px;border:0;background:#051226;color:#fff}
-  /* bottom nav */
-  .bottom-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:92%;height:74px;display:flex;justify-content:space-around;align-items:center;border-radius:22px;padding-bottom:6px;z-index:1100;background:rgba(20,20,30,0.55);backdrop-filter:blur(10px)}
-  .nav-btn{background:none;border:0;color:var(--muted);display:flex;flex-direction:column;align-items:center;cursor:pointer}
-  .nav-btn.active{color:var(--accent);font-weight:700}
-  /* drawer */
-  .drawer{position:fixed;right:-360px;top:0;width:320px;height:100%;padding:18px;background:linear-gradient(180deg,#081022,#050815);box-shadow:-30px 0 80px rgba(2,8,25,0.7);transition:right 260ms ease-in-out;border-left:1px solid rgba(255,255,255,0.02);z-index:1200}
-  .drawer.open{right:0}
-  .drawer .btn{display:block;padding:12px;border-radius:10px;background:rgba(255,255,255,0.03);color:#fff;text-align:center;margin-bottom:10px;border:1px solid rgba(255,255,255,0.02);cursor:pointer}
-  /* responsive */
-  @media (max-width:720px){ .analysis-grid{grid-template-columns:1fr} .wrap{padding:8px} .bottom-nav{height:78px} }
-  /* small helpers */
-  .muted{color:var(--muted)}
-  .hidden{display:none}
-  .btn-primary{background:var(--accent);color:#fff;padding:8px 12px;border-radius:10px;border:0;cursor:pointer}
-  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
-  .spacer{height:10px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitTracker V4 Clean</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
+
 <body>
-<div class="wrap">
-  <header>
-    <div class="topbar">
-      <div class="profile-tag" id="profileTag">User: —</div>
-      <div style="display:flex;gap:10px;align-items:center">
-        <input id="datePicker" type="date" />
-        <button id="openDrawerBtn" class="btn-ghost">☰</button>
-      </div>
-    </div>
 
-    <div class="banner" style="margin-top:12px">
-      <div>
-        <div id="bannerWeight" style="font-weight:800">Weight: — kg</div>
-        <div class="small" id="bannerLost">Lost: — kg</div>
-      </div>
-      <div style="text-align:right">
-        <div class="small" id="weeksLeft">Weeks left: —</div>
-        <div class="small" id="streakText">Streak: 0 days</div>
-      </div>
-    </div>
-
-    <div class="pill-row" role="tablist">
-      <button class="pill active" data-tab="food" id="tabFood">🍽️ Food</button>
-      <button class="pill" data-tab="exercise" id="tabExercise">🏋️ Exercise</button>
-      <button class="pill" data-tab="analysis" id="tabAnalysis">📊 Analysis</button>
-      <button class="pill" data-tab="profile" id="tabProfile">👤 Profile</button>
-    </div>
-  </header>
-
-  <!-- FOOD -->
-  <div id="foodPanel" class="panel" style="display:block">
-    <div class="small muted">Meal timings — Breakfast 09:30 · Lunch 13:30 · Snack 16:00 · Post-workout 19:30 · Dinner 21:00</div>
-    <div class="spacer"></div>
-
-    <div id="breakfastBlock" class="meal-block">
-      <div class="meal-title">Breakfast</div>
-      <div id="breakfastOptions"></div>
-    </div>
-
-    <div id="lunchBlock" class="meal-block">
-      <div class="meal-title">Lunch</div>
-      <div id="lunchOptions"></div>
-    </div>
-
-    <div id="snackBlock" class="meal-block">
-      <div class="meal-title">Snack</div>
-      <div id="snackOptions"></div>
-    </div>
-
-    <div id="postBlock" class="meal-block">
-      <div class="meal-title">Post-workout</div>
-      <div id="postOptions"></div>
-    </div>
-
-    <div id="dinnerBlock" class="meal-block">
-      <div class="meal-title">Dinner</div>
-      <div id="dinnerOptions"></div>
-    </div>
-
-    <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-      <input id="customMealName" class="small-input" placeholder="Custom meal name"/>
-      <input id="customMealCals" type="number" class="small-input" placeholder="kcal" style="width:110px"/>
-      <select id="customMealTarget" class="small-input">
-        <option value="breakfast">Breakfast</option><option value="lunch">Lunch</option><option value="snack">Snack</option><option value="post">Post-workout</option><option value="dinner">Dinner</option>
-      </select>
-      <button class="btn-primary" onclick="addCustomMeal()">Add</button>
-    </div>
-
-    <div style="height:12px"></div>
-    <div class="small muted">Total calories selected for date: <strong id="calTotal">0 kcal</strong></div>
-  </div>
-
-  <!-- EXERCISE -->
-  <div id="exercisePanel" class="panel" style="display:none">
-    <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
-      <label class="small muted">Difficulty</label>
-      <select id="difficulty" class="small-input">
-        <option value="beginner">Beginner</option>
-        <option value="moderate">Moderate</option>
-        <option value="advanced">Advanced</option>
-      </select>
-      <label style="display:flex;align-items:center;gap:6px;margin-left:8px"><input id="autoProg" type="checkbox"/> Auto-progression</label>
-      <div class="small muted" style="margin-left:8px">Weeks 1→Beginner → Weeks 7→Advanced</div>
-    </div>
-
-    <div id="exerciseList"></div>
-
-    <div style="height:8px"></div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <label class="small muted">Estimated session burn (kcal):</label>
-      <input id="sessionBurn" type="number" class="small-input" style="width:120px" value="0"/>
-      <button class="btn-primary" id="saveBurn">Save</button>
-    </div>
-
-    <div style="height:12px"></div>
-    <div style="display:flex;gap:12px;align-items:center">
-      <div style="flex:1">
-        <label class="small muted">RPE (Rate of Perceived Exertion)</label><br/>
-        <input id="rpe" type="range" min="1" max="10" value="6" style="width:100%"/><div class="small">Current: <span id="rpeVal">6</span></div>
-      </div>
-      <div style="width:140px">
-        <label class="small muted">Muscle recovery (0–100%)</label>
-        <input id="recovery" type="number" min="0" max="100" value="100" class="small-input"/>
-      </div>
+<!-- ================= USER OVERLAY ================= -->
+<div id="userOverlay" class="overlay">
+  <div class="overlay-box">
+    <h2>Select User</h2>
+    <div class="user-select-row">
+      <button class="user-btn" data-user="Aziz">Aziz</button>
+      <button class="user-btn" data-user="Yasmin">Yasmin</button>
     </div>
   </div>
-
-  <!-- ANALYSIS -->
-  <div id="analysisPanel" class="panel hidden">
-    <h3 style="margin-top:0">Weekly Analysis</h3>
-    <div class="analysis-grid">
-      <div>
-        <div id="weeklySummary" class="small muted"></div>
-        <div style="height:10px"></div>
-        <strong>Weekly Notes</strong>
-        <textarea id="weeklyNotes" placeholder="Weekly summary..."></textarea>
-        <div style="height:8px"></div>
-        <button class="btn-primary" onclick="exportWeeklyPDF()">Export weekly PDF</button>
-        <button class="btn-ghost" onclick="exportCSV()">Export CSV</button>
-      </div>
-      <div>
-        <strong>Weight progress</strong>
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-          <select id="weekSelect" class="small-input"></select>
-          <input id="weekWeight" type="number" class="small-input" placeholder="kg" style="width:120px"/>
-          <button class="btn-primary" onclick="saveWeekWeight()">Save</button>
-        </div>
-        <canvas id="weightChart" width="420" height="160"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROFILE -->
-  <div id="profilePanel" class="panel hidden">
-    <h3 style="margin-top:0">Profile</h3>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <div style="flex:1;min-width:220px;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px">
-        <div class="small muted">Current weight</div>
-        <div id="currentWeightDisplay" style="font-weight:800;font-size:20px">— kg</div>
-        <div class="small muted">Target</div>
-        <div id="targetWeightDisplay" style="font-weight:700">77 kg</div>
-        <div style="height:6px"></div>
-        <input id="newWeight" class="small-input" placeholder="kg" style="width:120px"/>
-        <button class="btn-primary" onclick="saveWeight()">Save weight</button>
-      </div>
-
-      <div style="flex:1;min-width:220px;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px">
-        <div class="small muted">Hydration</div>
-        <input id="drinkMl" class="small-input" placeholder="ml" style="width:120px"/><button class="btn-primary" onclick="logHydration()">Log</button>
-        <div style="height:8px"></div>
-        <div class="small" id="hydrationToday">Today: 0 ml</div>
-      </div>
-
-      <div style="flex-basis:100%;background:rgba(255,255,255,0.02);padding:12px;border-radius:10px">
-        <div class="small muted">Progress photos</div>
-        <button class="btn-ghost" onclick="triggerPhoto()">Add photo</button>
-        <input id="photoInput" type="file" accept="image/*" style="display:none" onchange="savePhoto(event)"/>
-        <div id="photoList" style="margin-top:8px"></div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-<!-- Drawer -->
-<div id="drawer" class="drawer" aria-hidden="true">
-  <h3 style="color:var(--text)">Menu</h3>
-  <div class="btn" id="switchUserBtn">Switch user</div>
-  <div class="btn" id="exportBtn">Export backup</div>
-  <label class="btn" style="cursor:pointer">Import JSON <input id="importFile" type="file" accept="application/json" style="display:none" onchange="importJSON(event)"/></label>
-  <div class="btn" onclick="clearAllData()">Clear all data</div>
-  <div style="height:18px"></div>
-  <div class="btn" id="closeDrawerBtn">Close</div>
+<!-- ================= TOP BAR ================= -->
+<header class="topbar glass">
+  <div class="profile-tag" id="profileTag">User: —</div>
+  <div class="top-right">
+    <input id="datePicker" type="date" />
+    <button id="openDrawer" class="menu-btn">☰</button>
+  </div>
+</header>
+
+<!-- ================= SIDE DRAWER ================= -->
+<div id="drawer" class="drawer">
+  <h3>Menu</h3>
+  <button class="drawer-item" id="switchUser">Switch user</button>
+  <button class="drawer-item" id="exportData">Export backup</button>
+  <button class="drawer-item" id="importData">Import JSON</button>
+  <button class="drawer-item" id="runMigration">Migrate v3 → v4</button>
+  <button class="drawer-item" id="resetData">Reset user</button>
+  <button class="drawer-item close" id="closeDrawer">Close</button>
 </div>
 
-<!-- Bottom nav -->
-<div class="bottom-nav">
-  <button class="nav-btn active" data-tab="food" id="navFood">🍽️ <span>Food</span></button>
-  <button class="nav-btn" data-tab="exercise" id="navExercise">🏋️ <span>Exercise</span></button>
-  <button class="nav-btn" data-tab="analysis" id="navAnalysis">📊 <span>Analysis</span></button>
-  <button class="nav-btn" data-tab="profile" id="navProfile">👤 <span>Profile</span></button>
-</div>
+<!-- ================= CONTENT WRAPPER ================= -->
+<main class="content">
 
-<script>
-/* ======= CONFIG ======= */
-const STORAGE_KEY = 'fittracker_v4_users_v1'; // DOES NOT overwrite V3
-const startDate = new Date('2025-11-10');
-const totalWeeks = 10;
-const dailyCalorieTarget = 2000;
-const defaultTargetWeight = 77;
+  <!-- ========== FOOD PAGE ========== -->
+  <section id="food" class="page active">
+    <h2 class="page-title">Food</h2>
+    <div id="foodContent"></div>
+  </section>
 
-/* ======= DEFAULT DATA ======= */
-const FOOD_OPTIONS = {
-  breakfast:[
-    {id:'mine',label:'Your breakfast — 2 egg whites + 1 whole egg + 1 toast + 1 tsp peanut butter + 1 fruit',kcal:420},
-    {id:'oats',label:'Oats with whey + berries',kcal:420},
-    {id:'scrambled',label:'Scrambled eggs + toast',kcal:430},
-    {id:'yogurt',label:'Greek yogurt + fruit',kcal:380}
-  ],
-  lunch:[
-    {id:'chickenrice',label:'Chicken kheema + rice',kcal:700},
-    {id:'grilled',label:'Grilled chicken + rice',kcal:650},
-    {id:'paneer',label:'Paneer salad bowl',kcal:520}
-  ],
-  snack:[
-    {id:'boiledegg',label:'1 boiled egg + 1 fruit',kcal:140},
-    {id:'almonds',label:'10 almonds',kcal:120}
-  ],
-  post:[
-    {id:'whey',label:'Whey isolate + 1/2 banana',kcal:220}
-  ],
-  dinner:[
-    {id:'tofu',label:'Tofu stir-fry + soup',kcal:480},
-    {id:'light',label:'Light soup / khichdi',kcal:350}
-  ]
-};
+  <!-- ========== EXERCISE PAGE ========== -->
+  <section id="exercise" class="page">
+    <h2 class="page-title">Exercise</h2>
 
-const WORKOUTS_BASE = {
-  1:{name:'Chest + Triceps + Core',ex:[
-    {title:'Bench Press',sets:4,reps:'10-12'},
-    {title:'Incline DB Press',sets:3,reps:'10-12'},
-    {title:'Cable Fly',sets:3,reps:'12-15'},
-    {title:'Tricep Pushdowns',sets:3,reps:'12-15'}
-  ]},
-  2:{name:'Back + Biceps + Core',ex:[
-    {title:'Lat Pulldown / Pull-ups',sets:4,reps:'10-12'},
-    {title:'Seated Cable Row',sets:3,reps:'10-12'},
-    {title:'DB One-Arm Row',sets:3,reps:'12'},
-    {title:'Barbell Bicep Curl',sets:3,reps:'12'}
-  ]},
-  3:{name:'Legs + Glutes',ex:[
-    {title:'Barbell Squats',sets:4,reps:'8-10'},
-    {title:'Leg Press',sets:3,reps:'12'},
-    {title:'Lunges',sets:3,reps:'10/leg'},
-    {title:'Hip Thrust',sets:3,reps:'15'}
-  ]},
-  4:{name:'Shoulders + Abs',ex:[
-    {title:'Overhead Press',sets:4,reps:'10-12'},
-    {title:'Lateral Raises',sets:3,reps:'12-15'},
-    {title:'Rear Delt Fly',sets:3,reps:'12'},
-    {title:'Russian Twists',sets:3,reps:'20'}
-  ]},
-  5:{name:'Full-Body HIIT',ex:[
-    {title:'Burpees',sets:3,reps:'10'},
-    {title:'Kettlebell Swings',sets:3,reps:'15'},
-    {title:'Jump Squats',sets:3,reps:'20'}
-  ]},
-  6:{name:'Core + Cardio',ex:[
-    {title:'Crunches',sets:3,reps:'20'},
-    {title:'Leg Raises',sets:3,reps:'15'},
-    {title:'Plank',sets:3,reps:'60s'}
-  ]},
-  7:{name:'Rest / Recovery',ex:[
-    {title:'Stretching / Yoga',sets:1,reps:'30 min'},
-    {title:'Brisk Walk',sets:1,reps:'20 min'}
-  ]}
-};
+    <div class="exercise-controls">
+      <label>Difficulty:
+        <select id="difficultySelect">
+          <option value="beginner">Beginner</option>
+          <option value="moderate">Moderate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </label>
 
-/* ======= STORAGE & MULTIUSER ======= */
-const defaultState = {
-  users:{
-    Aziz:createEmptyUser('Aziz'),
-    Yasmin:createEmptyUser('Yasmin')
-  },
-  lastUser:'Aziz'
-};
+      <label class="auto-prog-label">
+        <input type="checkbox" id="autoProgression" />
+        Auto-progression
+      </label>
 
-function createEmptyUser(name){
-  return {
-    name,
-    meals:{}, // ISO date -> {breakfast:{selected:[]}, custom:[]}
-    exercises:{}, // ISO date -> per-ex index set data + sessionBurn
-    weights:{}, // week1..weekN
-    photos:[], // base64
-    hydration:{}, // ISO date -> ml
-    completedDays:{}
-  };
-}
+      <span class="prog-info">Weeks 1–3 → Beginner • Weeks 4–6 → Moderate • Weeks 7–10 → Advanced</span>
+    </div>
 
-function loadStorage(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw){ localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultState)); return defaultState; }
-    return JSON.parse(raw);
-  }catch(e){ console.error('load error',e); localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultState)); return defaultState; }
-}
-function saveStorage(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(APP)); }
+    <div id="exerciseContent"></div>
+  </section>
 
-let APP = loadStorage();
-let CURRENT_USER = APP.lastUser || 'Aziz';
+  <!-- ========== ANALYSIS PAGE ========== -->
+  <section id="analysis" class="page">
+    <h2 class="page-title">Analysis</h2>
+    <div id="analysisContent"></div>
+  </section>
 
-/* ======= UTIL ======= */
-function formatISO(d){ return d.toISOString().split('T')[0]; }
-function setDateToPicker(d){
-  const iso = formatISO(d);
-  document.getElementById('datePicker').value = iso;
-  document.getElementById('datePicker').dispatchEvent(new Event('change'));
-}
-function getDayNumber(date){
-  const diff = Math.floor((date - startDate)/(1000*60*60*24));
-  return ((diff % 7)+7)%7 + 1;
-}
-function weekForDate(date){
-  const diffDays = Math.floor((date - startDate)/(1000*60*60*24));
-  const wk = Math.floor(diffDays/7)+1;
-  return Math.max(1, Math.min(totalWeeks, wk));
-}
+  <!-- ========== PROFILE PAGE ========== -->
+  <section id="profile" class="page">
+    <h2 class="page-title">Profile</h2>
+    <div id="profileContent"></div>
+  </section>
 
-/* ======= UI: USER SWITCH & INIT ======= */
-function initUI(){
-  // set date picker to today
-  setDateToPicker(new Date());
+</main>
 
-  // populate weekSelect
-  const wsel = document.getElementById('weekSelect');
-  wsel.innerHTML='';
-  for(let i=1;i<=totalWeeks;i++){ const o=document.createElement('option'); o.value=i; o.text='Week '+i; wsel.appendChild(o); }
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav glass">
+  <button class="nav-btn active" data-tab="food">🍽<span>Food</span></button>
+  <button class="nav-btn" data-tab="exercise">🏋️<span>Exercise</span></button>
+  <button class="nav-btn" data-tab="analysis">📊<span>Analysis</span></button>
+  <button class="nav-btn" data-tab="profile">👤<span>Profile</span></button>
+</nav>
 
-  // tabs
-  ['tabFood','tabExercise','tabAnalysis','tabProfile'].forEach(id=>{
-    document.getElementById(id).addEventListener('click', ()=>showTab(document.getElementById(id).dataset.tab || id.replace('tab','').toLowerCase()));
-  });
-  document.querySelectorAll('.nav-btn').forEach(b=>{
-    b.addEventListener('click', ()=>showTab(b.dataset.tab));
-  });
-
-  // drawer
-  document.getElementById('openDrawerBtn').addEventListener('click', ()=>openDrawer());
-  document.getElementById('closeDrawerBtn').addEventListener('click', ()=>closeDrawer());
-  document.getElementById('switchUserBtn').addEventListener('click', ()=>showUserOverlay());
-  document.getElementById('exportBtn').addEventListener('click', ()=>exportJSON());
-  document.getElementById('saveBurn').addEventListener('click', ()=>saveSessionBurn());
-  document.getElementById('rpe').addEventListener('input', ()=>document.getElementById('rpeVal').textContent=document.getElementById('rpe').value);
-
-  // remember last user
-  document.getElementById('profileTag').textContent = `User: ${CURRENT_USER}`;
-  renderForDate(new Date(document.getElementById('datePicker').value));
-
-  // user overlay creation
-  buildUserOverlay();
-
-  updateBanner();
-}
-
-/* ======= USER OVERLAY ======= */
-function buildUserOverlay(){
-  // create overlay if not present
-  if(document.getElementById('userOverlay')) return;
-  const ov = document.createElement('div'); ov.id='userOverlay';
-  ov.style.position='fixed'; ov.style.inset='0'; ov.style.display='flex'; ov.style.justifyContent='center'; ov.style.alignItems='center';
-  ov.style.background='rgba(0,0,0,0.55)'; ov.style.zIndex='2000';
-  ov.innerHTML = `
-    <div style="background:linear-gradient(180deg,#071427,#04101a);padding:20px;border-radius:12px;color:var(--text);width:320px;text-align:center">
-      <h2 style="margin-top:0">Choose user</h2>
-      <div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
-        <button class="btn-ghost" id="pickAziz">Aziz</button>
-        <button class="btn-ghost" id="pickYasmin">Yasmin</button>
-      </div>
-      <div style="height:12px"></div>
-      <div><button class="btn-ghost" id="pickClose">Close</button></div>
-    </div>`;
-  document.body.appendChild(ov);
-  document.getElementById('pickAziz').addEventListener('click', ()=>chooseUser('Aziz'));
-  document.getElementById('pickYasmin').addEventListener('click', ()=>chooseUser('Yasmin'));
-  document.getElementById('pickClose').addEventListener('click', ()=>{ ov.style.display='none'; });
-  ov.style.display='none';
-}
-function showUserOverlay(){ document.getElementById('userOverlay').style.display='flex'; }
-function chooseUser(name){
-  CURRENT_USER = name; APP.lastUser = name; saveStorage();
-  document.getElementById('profileTag').textContent = `User: ${CURRENT_USER}`;
-  document.getElementById('userOverlay').style.display='none';
-  renderForDate(new Date(document.getElementById('datePicker').value));
-  updateBanner();
-}
-
-/* ======= DRAWER ======= */
-function openDrawer(){ document.getElementById('drawer').classList.add('open'); }
-function closeDrawer(){ document.getElementById('drawer').classList.remove('open'); }
-
-/* ======= RENDER FOR DATE ======= */
-document.getElementById('datePicker').addEventListener('change', ()=>{
-  const d = new Date(document.getElementById('datePicker').value);
-  renderForDate(d);
-  updateBanner();
-});
-
-function renderForDate(date){
-  renderMealOptions(date);
-  renderExerciseForDate(date);
-  renderAnalysisForDate(date);
-  renderProfileForUser();
-}
-
-/* ======= MEALS ======= */
-function ensureUserKey(k){
-  if(!APP.users[CURRENT_USER]) APP.users[CURRENT_USER] = createEmptyUser(CURRENT_USER);
-  if(!APP.users[CURRENT_USER].meals) APP.users[CURRENT_USER].meals = {};
-}
-function renderMealOptions(date){
-  ensureUserKey();
-  const dk = formatISO(date);
-  const user = APP.users[CURRENT_USER];
-  if(!user.meals[dk]) user.meals[dk] = {custom:[]};
-  // for each section
-  ['breakfast','lunch','snack','post','dinner'].forEach(section=>{
-    const container = document.getElementById(section+'Options');
-    container.innerHTML='';
-    // default opts
-    const opts = (FOOD_OPTIONS[section] || []).map(o=>({...o,custom:false}));
-    // custom for this date
-    const customs = (user.meals[dk].custom || []).filter(c=>c.target===section);
-    customs.forEach(c=>opts.push({id:c.id,label:c.label+' (custom)',kcal:c.kcal,custom:true}));
-    // create UI
-    const selected = (user.meals[dk][section] && user.meals[dk][section].selected) ? user.meals[dk][section].selected : [];
-    if(!selected.length) {
-      const note = document.createElement('div'); note.className='small muted'; note.textContent='No items selected'; container.appendChild(note);
-    }
-    opts.forEach(opt=>{
-      const div = document.createElement('div'); div.className='option';
-      const left = document.createElement('div'); left.className='left';
-      const cb = document.createElement('input'); cb.type='checkbox'; cb.checked = selected.includes(opt.id);
-      cb.addEventListener('change', ()=>{ onMealChange(dk,section); });
-      const lab = document.createElement('div'); lab.innerHTML = `<div style="font-weight:700">${opt.label}</div>`;
-      left.appendChild(cb); left.appendChild(lab);
-      const right = document.createElement('div'); right.className='cal'; right.textContent = opt.kcal+' kcal';
-      div.appendChild(left); div.appendChild(right);
-      container.appendChild(div);
-    });
-  });
-  updateCalTotalForDate(date);
-}
-function onMealChange(dateKey,section){
-  const date = new Date(document.getElementById('datePicker').value);
-  const dk = dateKey;
-  const container = document.getElementById(section+'Options');
-  const nodes = container.querySelectorAll('input[type="checkbox"]');
-  const sel = [];
-  nodes.forEach((n, idx)=>{
-    if(n.checked){
-      // read the id from the options arrays by position
-      // reconstruct id: use label text to find id from FOOD_OPTIONS/customs
-      const label = n.nextSibling && n.nextSibling.textContent ? n.nextSibling.textContent.trim() : '';
-      // simple heuristic: search in FOOD_OPTIONS
-      const optFound = (FOOD_OPTIONS[section] || []).find(o=>label.startsWith(o.label)) || (APP.users[CURRENT_USER].meals[dk] && APP.users[CURRENT_USER].meals[dk].custom && APP.users[CURRENT_USER].meals[dk].custom.find(c=>label.startsWith(c.label)));
-      if(optFound) sel.push(optFound.id);
-      else {
-        // fallback — generate index id
-        sel.push(section+'_'+idx);
-      }
-    }
-  });
-  APP.users[CURRENT_USER].meals[dk] = APP.users[CURRENT_USER].meals[dk] || {custom:[]};
-  APP.users[CURRENT_USER].meals[dk][section] = {selected:sel};
-  saveStorage();
-  updateCalTotalForDate(new Date(dk));
-  renderAnalysisForDate(new Date(dk));
-}
-function addCustomMeal(){
-  const name = document.getElementById('customMealName').value.trim();
-  const kcal = Number(document.getElementById('customMealCals').value || 0);
-  const target = document.getElementById('customMealTarget').value;
-  if(!name || !kcal) return alert('enter name and kcal');
-  const dk = formatISO(new Date(document.getElementById('datePicker').value));
-  ensureUserKey();
-  const id = 'custom_'+Date.now();
-  APP.users[CURRENT_USER].meals[dk].custom.push({id,label:name,kcal,target});
-  // auto-select
-  APP.users[CURRENT_USER].meals[dk][target] = APP.users[CURRENT_USER].meals[dk][target] || {selected:[]};
-  APP.users[CURRENT_USER].meals[dk][target].selected.push(id);
-  saveStorage();
-  document.getElementById('customMealName').value=''; document.getElementById('customMealCals').value='';
-  renderMealOptions(new Date(document.getElementById('datePicker').value));
-}
-function caloriesEatenForDate(date){
-  const dk = formatISO(date);
-  const user = APP.users[CURRENT_USER];
-  if(!user || !user.meals || !user.meals[dk]) return 0;
-  let total=0;
-  ['breakfast','lunch','snack','post','dinner'].forEach(k=>{
-    const sel = user.meals[dk][k] && user.meals[dk][k].selected ? user.meals[dk][k].selected : [];
-    sel.forEach(id=>{
-      const def = (FOOD_OPTIONS[k]||[]).find(x=>x.id===id);
-      if(def) total += def.kcal;
-      else {
-        const c = (user.meals[dk].custom||[]).find(x=>x.id===id);
-        if(c) total += Number(c.kcal||0);
-      }
-    });
-  });
-  return total;
-}
-function updateCalTotalForDate(date){
-  document.getElementById('calTotal').textContent = caloriesEatenForDate(date) + ' kcal';
-}
-
-/* ======= EXERCISES ======= */
-function renderExerciseForDate(date){
-  ensureUserKey();
-  const dk = formatISO(date);
-  const dayNum = getDayNumber(date);
-  // difficulty & auto progression
-  let difficulty = document.getElementById('difficulty').value;
-  if(document.getElementById('autoProg').checked){
-    const wk = weekForDate(date);
-    if(wk <=3) difficulty='beginner';
-    else if(wk <=6) difficulty='moderate';
-    else difficulty='advanced';
-    // set UI dropdown to reflect auto-chosen (but not persist)
-    document.getElementById('difficulty').value = difficulty;
-  }
-  const workout = WORKOUTS_BASE[dayNum]; // base plan
-  const container = document.getElementById('exerciseList'); container.innerHTML='';
-  const header = document.createElement('div'); header.style.marginBottom='8px';
-  header.innerHTML = `<strong>Day — Today's plan</strong><div class="small muted"> ${workout ? workout.name : 'No workout loaded'} — (${difficulty})</div>`;
-  container.appendChild(header);
-  if(!workout){ container.appendChild(document.createElement('div').appendChild(document.createTextNode('Rest'))); return; }
-
-  // create per-ex blocks
-  const exState = (APP.users[CURRENT_USER].exercises[dk] || {});
-  workout.ex.forEach((ex, exIdx)=>{
-    // scale or tweak based on difficulty
-    const scale = difficulty==='beginner' ? 0.9 : difficulty==='moderate' ? 1.0 : 1.15;
-    const estReps = ex.reps;
-    const title = document.createElement('div'); title.style.fontWeight='700'; title.style.marginTop='8px'; title.textContent = ex.title;
-    container.appendChild(title);
-    const meta = document.createElement('div'); meta.className='small muted'; meta.textContent = `Sets: ${ex.sets} — Reps: ${estReps}`;
-    container.appendChild(meta);
-    const setsRow = document.createElement('div'); setsRow.className='sets-row';
-    for(let s=1;s<=ex.sets;s++){
-      const setEl = document.createElement('div'); setEl.className='set';
-      const cb = document.createElement('input'); cb.type='checkbox';
-      const lbl = document.createElement('div'); lbl.style.minWidth='48px'; lbl.textContent = 'Set '+s;
-      const reps = document.createElement('input'); reps.type='number'; reps.placeholder='reps';
-      const weight = document.createElement('input'); weight.type='number'; weight.placeholder='kg';
-      // load existing state
-      if(exState[exIdx] && exState[exIdx][s]){
-        const sv = exState[exIdx][s];
-        cb.checked = !!sv.done;
-        reps.value = sv.reps || '';
-        weight.value = sv.weight || '';
-      }
-      // save handler
-      function save(){
-        APP.users[CURRENT_USER].exercises[dk] = APP.users[CURRENT_USER].exercises[dk] || {};
-        APP.users[CURRENT_USER].exercises[dk][exIdx] = APP.users[CURRENT_USER].exercises[dk][exIdx] || {};
-        APP.users[CURRENT_USER].exercises[dk][exIdx][s] = {done:!!cb.checked,reps:reps.value?Number(reps.value):null,weight:weight.value?Number(weight.value):null};
-        saveStorage();
-        renderAnalysisForDate(new Date(dk));
-      }
-      cb.addEventListener('change', save); reps.addEventListener('change', save); weight.addEventListener('change', save);
-      setEl.appendChild(cb); setEl.appendChild(lbl); setEl.appendChild(reps); setEl.appendChild(weight);
-      setsRow.appendChild(setEl);
-    }
-    container.appendChild(setsRow);
-  });
-
-  // show session burn if present
-  const burnVal = (APP.users[CURRENT_USER].exercises[dk] && APP.users[CURRENT_USER].exercises[dk].sessionBurn) ? APP.users[CURRENT_USER].exercises[dk].sessionBurn : 0;
-  document.getElementById('sessionBurn').value = burnVal;
-}
-
-/* session burn */
-function saveSessionBurn(){
-  const dk = formatISO(new Date(document.getElementById('datePicker').value));
-  APP.users[CURRENT_USER].exercises[dk] = APP.users[CURRENT_USER].exercises[dk] || {};
-  APP.users[CURRENT_USER].exercises[dk].sessionBurn = Number(document.getElementById('sessionBurn').value || 0);
-  saveStorage();
-  renderAnalysisForDate(new Date(document.getElementById('datePicker').value));
-}
-
-/* ======= ANALYSIS ======= */
-function getWeekRange(date){
-  const wk = weekForDate(date);
-  const start = new Date(startDate.getTime() + (wk-1)*7*24*60*60*1000);
-  const end = new Date(start.getTime() + 6*24*60*60*1000);
-  return {week:wk,start,end};
-}
-function summarizeWeek(date){
-  const r = getWeekRange(date);
-  let eaten=0,burn=0,sessions=0;
-  for(let d=new Date(r.start); d<=r.end; d.setDate(d.getDate()+1)){
-    eaten += caloriesEatenForDate(new Date(d));
-    const ex = APP.users[CURRENT_USER].exercises[formatISO(d)];
-    if(ex && ex.sessionBurn){ burn += Number(ex.sessionBurn); sessions++; }
-    else if(ex){
-      // estimate from completed sets
-      const completed = Object.values(ex).filter(v=>typeof v==='object').flatMap(x=>Object.values(x)).filter(s=>s && s.done).length;
-      if(completed>0){ burn += 350; sessions++; }
-    }
-  }
-  return {week:r.week,start:r.start,end:r.end,totalEaten:eaten,totalBurn:burn,sessions};
-}
-function renderAnalysisForDate(date){
-  const wk = summarizeWeek(date);
-  document.getElementById('weeklySummary').innerHTML = `<strong>Week ${wk.week} (${wk.start.toLocaleDateString()} — ${wk.end.toLocaleDateString()}):</strong><br/>Total eaten: ${wk.totalEaten} kcal<br/>Estimated burn: ${wk.totalBurn} kcal (${wk.sessions} sessions)<br/>Net: ${wk.totalEaten - wk.totalBurn} kcal`;
-  document.getElementById('weeklyNotes').value = `Week ${wk.week} summary:\nCalories eaten: ${wk.totalEaten} kcal\nEstimated workout burn: ${wk.totalBurn} kcal\nNet: ${wk.totalEaten - wk.totalBurn} kcal\nTarget daily: ${dailyCalorieTarget} kcal`;
-  drawWeightChart();
-}
-
-/* weight chart */
-function drawWeightChart(){
-  const canvas = document.getElementById('weightChart');
-  const ctx = canvas.getContext('2d'); ctx.clearRect(0,0,canvas.width,canvas.height);
-  const user = APP.users[CURRENT_USER];
-  const targetStart = Number(user.weights && user.weights['week1'] ? user.weights['week1'] : '') || 87;
-  const targetEnd = Number(defaultTargetWeight);
-  // build arrays
-  const target = []; const actual = [];
-  for(let i=1;i<=totalWeeks;i++){
-    target.push(targetStart - ((i-1)*(targetStart-targetEnd)/(totalWeeks-1)));
-    actual.push(user.weights && user.weights['week'+i] ? user.weights['week'+i] : null);
-  }
-  const allVals = target.concat(actual.filter(v=>v!=null));
-  const minV = Math.min(...allVals) - 1; const maxV = Math.max(...allVals) + 1;
-  const w=canvas.width, h=canvas.height;
-  // grid
-  ctx.strokeStyle='rgba(255,255,255,0.06)'; for(let g=0;g<4;g++){ const y=10+g*(h-20)/3; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();}
-  // target dashed
-  ctx.setLineDash([6,4]); ctx.strokeStyle='#ffd24d'; ctx.beginPath();
-  target.forEach((v,i)=>{ const x=10+i*(w-20)/(totalWeeks-1), y=10+((maxV-v)/(maxV-minV))*(h-20); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke();
-  // actual
-  ctx.setLineDash([]); ctx.strokeStyle='#7c5cff'; ctx.beginPath();
-  let started=false;
-  actual.forEach((v,i)=>{ if(v==null) return; const x=10+i*(w-20)/(totalWeeks-1), y=10+((maxV-v)/(maxV-minV))*(h-20); if(!started){ ctx.moveTo(x,y); started=true;} else ctx.lineTo(x,y); ctx.fillStyle='#7c5cff'; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill(); });
-  ctx.stroke();
-}
-
-/* save weekly weight */
-function saveWeekWeight(){
-  const w = Number(document.getElementById('weekSelect').value);
-  const kg = Number(document.getElementById('weekWeight').value);
-  if(!kg) return alert('enter weight');
-  APP.users[CURRENT_USER].weights = APP.users[CURRENT_USER].weights || {};
-  APP.users[CURRENT_USER].weights['week'+w] = kg;
-  saveStorage();
-  drawWeightChart();
-  updateBanner();
-  alert('Saved');
-}
-
-/* ======= PROFILE ======= */
-function renderProfileForUser(){
-  const u = APP.users[CURRENT_USER];
-  const latestWeek = Math.max(0, ...Object.keys(u.weights||{}).map(k=>Number(k.replace('week',''))));
-  const latestWeight = latestWeek ? u.weights['week'+latestWeek] : null;
-  document.getElementById('currentWeightDisplay').textContent = latestWeight ? latestWeight + ' kg' : '— kg';
-  document.getElementById('targetWeightDisplay').textContent = defaultTargetWeight + ' kg';
-  const todayISO = formatISO(new Date(document.getElementById('datePicker').value));
-  const ml = (u.hydration && u.hydration[todayISO]) ? u.hydration[todayISO] : 0;
-  document.getElementById('hydrationToday').textContent = 'Today: '+ml+' ml';
-  // photos
-  const photoList = document.getElementById('photoList'); photoList.innerHTML='';
-  (u.photos||[]).forEach((b64,idx)=>{
-    const img = document.createElement('img'); img.src=b64; img.style.width='120px'; img.style.marginRight='8px'; img.style.borderRadius='8px';
-    photoList.appendChild(img);
-  });
-}
-
-/* weight quick save */
-function saveWeight(){ const v = Number(document.getElementById('newWeight').value); if(!v) return alert('enter'); const wk = weekForDate(new Date(document.getElementById('datePicker').value)); APP.users[CURRENT_USER].weights = APP.users[CURRENT_USER].weights || {}; APP.users[CURRENT_USER].weights['week'+wk]=v; saveStorage(); renderProfileForUser(); updateBanner(); alert('Saved'); }
-
-/* hydration */
-function logHydration(){ const ml = Number(document.getElementById('drinkMl').value || 0); if(!ml) return; const dk = formatISO(new Date(document.getElementById('datePicker').value)); APP.users[CURRENT_USER].hydration = APP.users[CURRENT_USER].hydration || {}; APP.users[CURRENT_USER].hydration[dk] = (APP.users[CURRENT_USER].hydration[dk] || 0) + ml; saveStorage(); renderProfileForUser(); document.getElementById('drinkMl').value=''; }
-
-/* photos */
-function triggerPhoto(){ document.getElementById('photoInput').click(); }
-function savePhoto(e){ const f = e.target.files[0]; if(!f) return; const reader = new FileReader(); reader.onload = function(ev){ APP.users[CURRENT_USER].photos = APP.users[CURRENT_USER].photos || []; APP.users[CURRENT_USER].photos.push(ev.target.result); saveStorage(); renderProfileForUser(); }; reader.readAsDataURL(f); }
-
-/* ======= EXPORT / IMPORT / CLEAR ======= */
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(APP, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='fittracker_backup.json'; a.click(); URL.revokeObjectURL(url);
-}
-function importJSON(e){
-  const f = e.target.files[0]; if(!f) return;
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    try{
-      const obj = JSON.parse(ev.target.result);
-      // merge with caution
-      APP = Object.assign({}, APP, obj);
-      saveStorage();
-      alert('Imported');
-      renderForDate(new Date(document.getElementById('datePicker').value));
-    }catch(err){ alert('Invalid JSON'); }
-  };
-  reader.readAsText(f);
-}
-function clearAllData(){ if(!confirm('Clear all saved data for all users?')) return; localStorage.removeItem(STORAGE_KEY); APP = loadStorage(); location.reload(); }
-
-/* ======= ANALYSIS EXPORTS (placeholders) ======= */
-function exportWeeklyPDF(){ alert('PDF export placeholder — implementable next'); }
-function exportCSV(){ alert('CSV export placeholder — implementable next'); }
-
-/* ======= BANNER & STREAK ======= */
-function updateBanner(){
-  const u = APP.users[CURRENT_USER];
-  const latestWeek = Math.max(0, ...Object.keys(u.weights||{}).map(k=>Number(k.replace('week',''))));
-  const latestWeight = latestWeek ? u.weights['week'+latestWeek] : null;
-  document.getElementById('bannerWeight').textContent = latestWeight ? `Weight: ${latestWeight} kg` : 'Weight: — kg';
-  document.getElementById('bannerLost').textContent = latestWeight ? `Lost: ${(87 - latestWeight).toFixed(1)} kg` : 'Lost: — kg';
-  const today = new Date(document.getElementById('datePicker').value);
-  const endDate = new Date(startDate.getTime() + (totalWeeks-1)*7*24*60*60*1000);
-  const weeksLeft = Math.max(0, Math.ceil((endDate - today)/(7*24*60*60*1000)));
-  document.getElementById('weeksLeft').textContent = `Weeks left: ${weeksLeft}`;
-  // streak
-  let streak=0;
-  for(let i=0;i<365;i++){
-    const d = new Date(); d.setDate(today.getDate()-i);
-    const k = formatISO(d);
-    if(u.completedDays && u.completedDays[k]) streak++; else break;
-  }
-  document.getElementById('streakText').textContent = `Streak: ${streak} day${streak===1?'':'s'}`;
-}
-
-/* ======= TABS ======= */
-function showTab(name){
-  document.getElementById('foodPanel').style.display='none';
-  document.getElementById('exercisePanel').style.display='none';
-  document.getElementById('analysisPanel').style.display='none';
-  document.getElementById('profilePanel').style.display='none';
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(n=>n.classList.remove('active'));
-  if(name==='food'){ document.getElementById('foodPanel').style.display='block'; document.getElementById('tabFood').classList.add('active'); document.getElementById('navFood').classList.add('active'); }
-  if(name==='exercise'){ document.getElementById('exercisePanel').style.display='block'; document.getElementById('tabExercise').classList.add('active'); document.getElementById('navExercise').classList.add('active'); }
-  if(name==='analysis'){ document.getElementById('analysisPanel').style.display='block'; document.getElementById('tabAnalysis').classList.add('active'); document.getElementById('navAnalysis').classList.add('active'); }
-  if(name==='profile'){ document.getElementById('profilePanel').style.display='block'; document.getElementById('tabProfile').classList.add('active'); document.getElementById('navProfile').classList.add('active'); }
-  renderForDate(new Date(document.getElementById('datePicker').value));
-}
-
-/* ======= INIT ======= */
-initUI();
-
-/* expose some helpers for debug in console */
-window._FT = {APP, saveStorage, renderForDate, showUserOverlay, chooseUser};
-</script>
+<script src="app.js"></script>
 </body>
 </html>
