@@ -1,10 +1,6 @@
-/* ============================================================
-   FitTracker v4 Pro — FINAL STYLE (Theme C Hybrid)
-   Clean dark base + neon accents only on active elements
-   Bottom Nav Style #3 — Edge-to-edge glass bar
-============================================================ */
+/* FitTracker v4 Pro — FINAL STYLE (Theme C Hybrid) */
 
-/* ---------------------- ROOT VARIABLES ---------------------- */
+/* Root */
 :root {
   --bg: #0c0d10;
   --panel: #15171d;
@@ -19,7 +15,6 @@
   --transition: 0.25s ease;
 }
 
-/* ---------------------- GLOBAL RESET ------------------------ */
 html, body {
   margin: 0;
   padding: 0;
@@ -33,14 +28,14 @@ html, body {
 
 * { box-sizing: border-box; }
 
-/* ---------------------- GLASS EFFECT ------------------------ */
+/* Glass */
 .glass {
   background: var(--glass);
   backdrop-filter: blur(var(--blur));
   border: 1px solid var(--border);
 }
 
-/* ---------------------- USER OVERLAY ------------------------ */
+/* Overlay */
 .overlay {
   position: fixed;
   top: 0; left: 0;
@@ -48,28 +43,9 @@ html, body {
   background: rgba(0,0,0,0.55);
   z-index: 3000;
 }
-
-.full-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.overlay-box {
-  width: 85%;
-  max-width: 340px;
-  padding: 28px;
-  border-radius: var(--radius);
-  background: var(--panel);
-  border: 1px solid var(--border);
-}
-
-.user-select-row {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 22px;
-}
+.full-center { display:flex; align-items:center; justify-content:center; }
+.overlay-box { width:85%; max-width:340px; padding:28px; border-radius:var(--radius); background:var(--panel); border:1px solid var(--border); }
+.user-select-row { display:flex; gap:16px; justify-content:center; margin-top:22px; }
 
 .user-btn {
   padding: 12px 20px;
@@ -82,234 +58,68 @@ html, body {
   cursor: pointer;
   transition: var(--transition);
 }
+.user-btn:hover { background: #b989ff; }
 
-.user-btn:hover {
-  background: #b989ff;
-}
-
-/* ---------------------- TOP BAR ----------------------------- */
+/* Topbar */
 .topbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 62px;
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--glass);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(var(--blur));
-  z-index: 2000;
+  position: fixed; top: 0; width:100%; height:62px; padding:0 16px; display:flex; align-items:center; justify-content:space-between;
+  background: var(--glass); border-bottom:1px solid var(--border); backdrop-filter: blur(var(--blur)); z-index:2000;
 }
+.profile-tag { font-size:16px; font-weight:700; color:var(--text); }
+.top-right { display:flex; gap:10px; align-items:center; }
+.date-input { padding:8px 12px; border-radius:12px; background:#12141a; border:1px solid var(--border); color:var(--text); }
+.menu-btn { background: rgba(169,116,255,0.12); border:none; padding:8px 12px; border-radius:10px; color:var(--text); cursor:pointer; }
 
-.profile-tag {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-}
+/* Drawer */
+.drawer { position:fixed; top:0; right:-320px; height:100%; width:300px; padding:20px; background:var(--panel); border-left:1px solid var(--border); box-shadow:-12px 0 30px rgba(0,0,0,0.45); transition:right 0.3s ease; z-index:2500; }
+.drawer.open { right:0; }
+.drawer h3 { margin:0 0 20px; font-size:22px; font-weight:700; }
+.drawer-item { width:100%; padding:14px; border-radius:12px; background: rgba(255,255,255,0.05); border:1px solid var(--border); text-align:center; color:var(--text); margin-bottom:14px; cursor:pointer; }
 
-.top-right {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
+/* Content */
+.content { padding:80px 16px 110px; width:100%; box-sizing:border-box; }
 
-.date-input {
-  padding: 8px 12px;
-  border-radius: 12px;
-  background: #12141a;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
+/* Page */
+.page { display:none; padding:20px; border-radius:var(--radius); animation:fade 0.28s ease; }
+.page.active { display:block; }
+.page-title { font-size:26px; font-weight:800; margin-bottom:18px; color:#e8dcff; }
+@keyframes fade { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
 
-/* ---------------------- MAIN CONTENT ------------------------ */
-.content {
-  padding: 80px 16px 110px;
-  width: 100%;
-  box-sizing: border-box;
-}
+/* Food blocks */
+.meal-block { margin-bottom:22px; background: rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+.meal-title { font-size:20px; font-weight:700; margin-bottom:10px; }
+.option-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+.option-row:last-child { border-bottom:none; }
+.kcal { color:var(--accent); font-weight:600; }
 
-/* ---------------------- PAGES ------------------------------- */
-.page {
-  display: none;
-  padding: 20px;
-  border-radius: var(--radius);
-  animation: fade 0.28s ease;
-}
+/* Exercise */
+.exercise-plan { margin-top:12px; background: rgba(255,255,255,0.03); padding:16px; border-radius:var(--radius); border:1px solid var(--border); }
+.exercise-item { padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+.exercise-title { font-size:18px; font-weight:700; }
 
-.page.active { display: block; }
+/* Analysis */
+.summary-box { padding:16px; margin-bottom:20px; border-radius:var(--radius); background: rgba(255,255,255,0.03); border:1px solid var(--border); }
+.summary-row { margin-bottom:6px; }
 
-.page-title {
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 18px;
-  color: #e8dcff;
-}
+/* Profile */
+.profile-box { padding:18px; margin-bottom:20px; background: rgba(255,255,255,0.03); border-radius:var(--radius); border:1px solid var(--border); }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* Bottom nav (edge-to-edge) */
+.bottom-nav { position:fixed; bottom:0; width:100%; height:74px; display:flex; justify-content:space-around; align-items:center; background:rgba(20,20,30,0.55); border-top:1px solid var(--border); backdrop-filter: blur(var(--blur)); z-index:2000; }
+.nav-btn { background:none; border:none; color:var(--text-muted); font-size:15px; display:flex; flex-direction:column; align-items:center; gap:3px; padding-top:6px; cursor:pointer; transition:var(--transition); }
+.nav-btn span { font-size:13px; }
+.nav-btn.active { color:var(--accent); font-weight:600; transform: translateY(-2px); }
 
-/* ---------------------- FOOD PAGE --------------------------- */
-.meal-block {
-  margin-bottom: 22px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-}
+/* Inputs / pills */
+.small-input { padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:#071427; color:#fff; }
+.pill { padding:8px 12px; border-radius:10px; background:var(--accent); color:#fff; border:none; cursor:pointer; }
 
-.meal-title {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
+/* Utilities */
+.text-muted { color:var(--text-muted); }
+.chart { min-height:120px; }
 
-.option-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.option-row:last-child {
-  border-bottom: none;
-}
-
-.kcal {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-/* ---------------------- EXERCISE PAGE ----------------------- */
-.exercise-plan {
-  margin-top: 12px;
-  background: rgba(255,255,255,0.03);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  padding: 16px;
-}
-
-.exercise-item {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.exercise-item:last-child {
-  border-bottom: none;
-}
-
-.exercise-title {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-/* ---------------------- ANALYSIS PAGE ----------------------- */
-.summary-box {
-  padding: 16px;
-  margin-bottom: 20px;
-  border-radius: var(--radius);
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-}
-
-.summary-row {
-  margin-bottom: 6px;
-}
-
-/* ---------------------- PROFILE PAGE ------------------------ */
-.profile-box {
-  padding: 18px;
-  margin-bottom: 20px;
-  background: rgba(255,255,255,0.03);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
-
-/* ---------------------- DRAWER ------------------------------ */
-.drawer {
-  position: fixed;
-  top: 0;
-  right: -320px;
-  height: 100%;
-  width: 300px;
-  padding: 20px;
-  background: var(--panel);
-  border-left: 1px solid var(--border);
-  box-shadow: -12px 0 30px rgba(0,0,0,0.45);
-  transition: right 0.3s ease;
-  z-index: 2500;
-}
-
-.drawer.open {
-  right: 0;
-}
-
-.drawer h3 {
-  margin: 0 0 20px;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.drawer-item {
-  width: 100%;
-  padding: 14px;
-  border-radius: var(--radius);
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  text-align: center;
-  color: var(--text);
-  margin-bottom: 14px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.drawer-item:hover {
-  background: rgba(255,255,255,0.12);
-}
-
-/* ---------------------- BOTTOM NAV (STYLE #3) --------------- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 74px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: rgba(20,20,30,0.55);
-  border-top: 1px solid var(--border);
-  backdrop-filter: blur(var(--blur));
-  z-index: 2000;
-}
-
-.nav-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding-top: 6px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.nav-btn span {
-  font-size: 13px;
-}
-
-.nav-btn.active {
-  color: var(--accent);
-  font-weight: 600;
-  transform: translateY(-2px);
-}
-
-/* ---------------------- RESPONSIVE TWEAKS ------------------- */
-@media (max-width: 460px) {
-  .page-title { font-size: 22px; }
+/* Responsive */
+@media (max-width: 540px) {
+  .page-title { font-size:22px; }
+  .overlay-box { width:90%; max-width:320px; padding:20px; }
 }
