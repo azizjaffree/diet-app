@@ -1,187 +1,242 @@
-<div class="app-container">
-  <header class="app-header">
-    <button class="menu-btn" id="menuBtn">☰</button>
-    <h1 class="app-title">Diet Tracker</h1>
-    <button class="user-btn" id="userBtn">👤</button>
-  </header>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitTracker v4 Pro — Clean Install</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#0c0d10" />
+</head>
+<body>
 
-  <main class="app-content">
-    <!-- Food Screen Container -->
-    <section class="screen-container food-screen" id="foodScreen">
-      <h2>Food Tracking</h2>
-      <div class="placeholder-content">
-        <div class="food-entry-placeholder">
-          <div class="food-icon">🍎</div>
-          <div class="food-details">
-            <h3>Breakfast</h3>
-            <p>Track your morning meal</p>
-          </div>
+  <!-- USER SELECT OVERLAY -->
+  <div id="userOverlay" class="overlay full-center" role="dialog" aria-label="Choose user">
+    <div class="overlay-box glass" role="document">
+      <h2 style="margin:0 0 12px 0">Choose profile</h2>
+      <p style="margin:0 0 18px 0;color:var(--text-muted)">Pick a profile to continue</p>
+      <div class="user-select-row">
+        <button class="user-btn" data-user="Aziz">Aziz</button>
+        <button class="user-btn" data-user="Yasmin">Yasmin</button>
+      </div>
+      <div style="margin-top:14px;font-size:13px;color:var(--text-muted)">
+        <label style="font-weight:600">Quick import (JSON)</label>
+        <div style="margin-top:8px">
+          <label class="user-btn" style="background:transparent;border:1px solid var(--border);color:var(--text);padding:8px 12px;cursor:pointer">
+            Import JSON
+            <input id="overlayImport" type="file" accept="application/json" style="display:none" />
+          </label>
         </div>
-        <div class="food-entry-placeholder">
-          <div class="food-icon">🥗</div>
-          <div class="food-details">
-            <h3>Lunch</h3>
-            <p>Log your lunch items</p>
-          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP CONTAINER -->
+  <div id="appContainer">
+
+    <!-- TOP BAR -->
+    <header class="topbar glass" role="banner">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="profileTag" class="profile-tag">👤 —</div>
+        <div id="goalTag" class="small-muted" style="font-size:13px;color:var(--text-muted)">10-week goal: -10 kg</div>
+      </div>
+
+      <div class="top-right">
+        <input id="datePicker" type="date" class="date-input" aria-label="Select date" />
+        <button id="openDrawer" class="menu-btn" aria-label="Open menu">☰</button>
+      </div>
+    </header>
+
+    <!-- SIDE DRAWER -->
+    <aside id="drawer" class="drawer" aria-hidden="true">
+      <h3>Menu</h3>
+      <button class="drawer-item" id="switchUser">Switch user</button>
+      <button class="drawer-item" id="exportJSON">Export backup</button>
+      <label class="drawer-item" id="importLabel" style="cursor:pointer">Import JSON
+        <input id="importFile" type="file" accept="application/json" style="display:none">
+      </label>
+      <button class="drawer-item" id="settingsOpen">Settings</button>
+      <div style="height:18px"></div>
+      <button class="drawer-item close" id="closeDrawer">Close</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="content" role="main">
+
+      <!-- FOOD -->
+      <section id="food" class="page active" aria-labelledby="foodTitle">
+        <h2 id="foodTitle" class="page-title">Food</h2>
+        <div class="meal-timings small-muted" style="margin-bottom:12px">Meal timings — Breakfast 09:30 · Lunch 13:30 · Snack 16:00 · Post-WO 19:30 · Dinner 21:00</div>
+
+        <div id="foodBlocks"></div>
+
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <input id="customName" class="small-input" placeholder="Custom meal name" />
+          <input id="customCals" type="number" class="small-input" placeholder="kcal" style="width:110px"/>
+          <select id="customSlot" class="small-input" style="width:150px">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="snack">Snack</option>
+            <option value="post">Post-WO</option>
+            <option value="dinner">Dinner</option>
+          </select>
+          <button id="addCustom" class="pill">Add</button>
         </div>
-        <div class="food-entry-placeholder">
-          <div class="food-icon">🍽️</div>
-          <div class="food-details">
-            <h3>Dinner</h3>
-            <p>Record your dinner</p>
-          </div>
+
+        <div style="margin-top:12px" id="foodFooter">
+          <strong>Total:</strong> <span id="foodTotal">0 kcal</span>
         </div>
-        <div class="macros-placeholder">
-          <h3>Macros Overview</h3>
-          <div class="macro-bars">
-            <div class="macro-bar">
-              <span>Protein</span>
-              <div class="bar-container"><div class="bar protein"></div></div>
+      </section>
+
+      <!-- EXERCISE -->
+      <section id="exercise" class="page" aria-labelledby="exerciseTitle">
+        <h2 id="exerciseTitle" class="page-title">Exercise</h2>
+
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
+          <label style="font-weight:700">Difficulty</label>
+          <select id="difficultySelect" class="small-input">
+            <option value="beginner">Beginner</option>
+            <option value="moderate">Moderate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+
+          <label style="margin-left:18px;font-weight:700">Auto-progression</label>
+          <input id="autoProg" type="checkbox" />
+          <span class="small-muted" style="margin-left:8px">Weeks 1→Beginner → Weeks 7→Advanced</span>
+        </div>
+
+        <div id="workoutContainer" class="exercise-plan">
+          <div class="exercise-item">
+            <div class="exercise-title">Day — Today's plan</div>
+            <div id="exerciseList" style="margin-top:10px">
+              <div class="text-muted">No workout loaded</div>
             </div>
-            <div class="macro-bar">
-              <span>Carbs</span>
-              <div class="bar-container"><div class="bar carbs"></div></div>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+            <label style="min-width:180px">Estimated session burn (kcal)</label>
+            <input id="sessionBurn" type="number" class="small-input" style="width:130px" value="0"/>
+            <button id="saveBurn" class="pill">Save</button>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+          <div style="min-width:220px">
+            <label style="display:block;font-weight:700">RPE (Rate of Perceived Exertion)</label>
+            <input id="rpeInput" type="range" min="1" max="10" value="6" />
+            <div class="small-muted">Current: <span id="rpeValue">6</span></div>
+          </div>
+
+          <div style="min-width:220px">
+            <label style="display:block;font-weight:700">Muscle recovery (0–100%)</label>
+            <input id="recoveryInput" type="number" min="0" max="100" value="100" class="small-input" style="width:120px" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ANALYSIS -->
+      <section id="analysis" class="page" aria-labelledby="analysisTitle">
+        <h2 id="analysisTitle" class="page-title">Analysis</h2>
+
+        <div id="analysisContent">
+          <div class="summary-box">
+            <div class="summary-row"><strong id="weekLabel">Week —</strong></div>
+            <div class="summary-row">Total eaten: <span id="weekEaten">0</span> kcal</div>
+            <div class="summary-row">Estimated burn: <span id="weekBurn">0</span> kcal (<span id="sessionsCount">0</span> sessions)</div>
+            <div class="summary-row">Net: <span id="weekNet">0</span> kcal</div>
+          </div>
+
+          <div id="charts" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="chart glass" id="calChart" style="min-height:160px">Calories chart</div>
+            <div class="chart glass" id="weightChart" style="min-height:160px">Weight chart</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <textarea id="weeklyNotes" placeholder="Weekly notes..."></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button id="genPdf" class="pill">Export weekly PDF</button>
+              <button id="downloadCSV" class="pill">Export CSV</button>
             </div>
-            <div class="macro-bar">
-              <span>Fats</span>
-              <div class="bar-container"><div class="bar fats"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section id="profile" class="page" aria-labelledby="profileTitle">
+        <h2 id="profileTitle" class="page-title">Profile</h2>
+
+        <div class="profile-box">
+          <div style="display:flex;gap:18px;flex-wrap:wrap">
+            <div>
+              <div class="small-muted">Current weight</div>
+              <div style="font-weight:800;font-size:20px" id="currentWeight">— kg</div>
+            </div>
+            <div>
+              <div class="small-muted">Target</div>
+              <div style="font-weight:800;font-size:20px" id="targetWeight">77 kg</div>
+            </div>
+            <div>
+              <div class="small-muted">Weeks left</div>
+              <div style="font-weight:800;font-size:20px" id="weeksLeft">—</div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Exercise Screen Container -->
-    <section class="screen-container exercise-screen" id="exerciseScreen">
-      <h2>Exercise Tracking</h2>
-      <div class="placeholder-content">
-        <div class="workout-placeholder">
-          <div class="workout-icon">🏃</div>
-          <div class="workout-details">
-            <h3>Cardio</h3>
-            <p>Track your cardio activities</p>
+          <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+            <input id="weightInput" type="number" class="small-input" placeholder="kg" style="width:120px"/>
+            <button id="saveWeight" class="pill">Save weight</button>
+            <button id="exportProgress" class="pill">Export progress</button>
           </div>
         </div>
-        <div class="workout-placeholder">
-          <div class="workout-icon">💪</div>
-          <div class="workout-details">
-            <h3>Strength Training</h3>
-            <p>Log your weightlifting sessions</p>
-          </div>
-        </div>
-        <div class="difficulty-placeholder">
-          <h3>Workout Difficulty</h3>
-          <div class="difficulty-options">
-            <div class="difficulty-option">Easy</div>
-            <div class="difficulty-option">Medium</div>
-            <div class="difficulty-option">Hard</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Analysis Screen Container -->
-    <section class="screen-container analysis-screen" id="analysisScreen">
-      <h2>Progress Analysis</h2>
-      <div class="placeholder-content">
-        <div class="chart-placeholder">
-          <h3>Weight Progress</h3>
-          <div class="chart-container">
-            <!-- Placeholder for weight chart -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="profile-box">
+            <h4 style="margin-top:0">Hydration</h4>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input id="waterInput" type="number" class="small-input" placeholder="ml" />
+              <button id="saveWater" class="pill">Log</button>
+            </div>
+            <div style="margin-top:8px" id="waterToday">Today: 0 ml</div>
           </div>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h4>Calories Consumed</h4>
-            <p class="stat-value">2,150</p>
-          </div>
-          <div class="stat-card">
-            <h4>Calories Burned</h4>
-            <p class="stat-value">450</p>
-          </div>
-          <div class="stat-card">
-            <h4>Net Calories</h4>
-            <p class="stat-value">1,700</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Profile Screen Container -->
-    <section class="screen-container profile-screen" id="profileScreen">
-      <h2>Profile</h2>
-      <div class="placeholder-content">
-        <div class="profile-header">
-          <div class="profile-avatar"></div>
-          <h3>John Doe</h3>
-        </div>
-        <div class="profile-info">
-          <div class="info-item">
-            <span>Age:</span>
-            <span>30 years</span>
-          </div>
-          <div class="info-item">
-            <span>Height:</span>
-            <span>5'10"</span>
-          </div>
-          <div class="info-item">
-            <span>Weight:</span>
-            <span>175 lbs</span>
-          </div>
-          <div class="info-item">
-            <span>Goal:</span>
-            <span>Lose Weight</span>
+          <div class="profile-box">
+            <h4 style="margin-top:0">Macros (estimated)</h4>
+            <div>Protein: <span id="macroProtein">—</span> g</div>
+            <div>Carbs: <span id="macroCarbs">—</span> g</div>
+            <div>Fat: <span id="macroFat">—</span> g</div>
           </div>
         </div>
-        <div class="photos-placeholder">
-          <h3>Progress Photos</h3>
-          <div class="photo-grid">
-            <div class="photo-placeholder"></div>
-            <div class="photo-placeholder"></div>
-            <div class="photo-placeholder"></div>
-            <div class="photo-placeholder"></div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Hydration Screen Container -->
-    <section class="screen-container hydration-screen" id="hydrationScreen">
-      <h2>Hydration Tracking</h2>
-      <div class="placeholder-content">
-        <div class="water-tracker">
-          <div class="water-icon">💧</div>
-          <h3>Daily Water Intake</h3>
-          <div class="water-progress">
-            <div class="water-fill"></div>
+        <div style="margin-top:12px" class="profile-box">
+          <h4 style="margin-top:0">Progress Photos</h4>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button id="addPhoto" class="pill">Add photo</button>
+            <input id="photoFile" type="file" accept="image/*" style="display:none" />
+            <div id="photoGrid" style="display:flex;gap:8px;flex-wrap:wrap"></div>
           </div>
-          <p class="water-count">5 of 8 glasses</p>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <a href="#foodScreen" class="nav-item active">
-      <span class="nav-icon">🍽️</span>
-      <span class="nav-label">Food</span>
-    </a>
-    <a href="#exerciseScreen" class="nav-item">
-      <span class="nav-icon">🏃</span>
-      <span class="nav-label">Exercise</span>
-    </a>
-    <a href="#analysisScreen" class="nav-item">
-      <span class="nav-icon">📊</span>
-      <span class="nav-label">Analysis</span>
-    </a>
-    <a href="#hydrationScreen" class="nav-item">
-      <span class="nav-icon">💧</span>
-      <span class="nav-label">Hydration</span>
-    </a>
-    <a href="#profileScreen" class="nav-item">
-      <span class="nav-icon">👤</span>
-      <span class="nav-label">Profile</span>
-    </a>
-  </nav>
-</div>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav" role="navigation" aria-label="Main">
+      <button class="nav-btn active" data-tab="food" aria-label="Food tab">
+        <div>🍽️</div><span>Food</span>
+      </button>
+      <button class="nav-btn" data-tab="exercise" aria-label="Exercise tab">
+        <div>🏋️</div><span>Exercise</span>
+      </button>
+      <button class="nav-btn" data-tab="analysis" aria-label="Analysis tab">
+        <div>📊</div><span>Analysis</span>
+      </button>
+      <button class="nav-btn" data-tab="profile" aria-label="Profile tab">
+        <div>👤</div><span>Profile</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <div id="settingsPanel" style="display:none"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
