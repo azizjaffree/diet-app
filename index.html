@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FitTracker V4</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- PWA Support -->
+  <link rel="stylesheet" href="style.css?v=3">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0d0d0d">
 </head>
 <body>
 
@@ -59,17 +56,15 @@
     </div>
   </nav>
 
-  <!-- Feature Modules (must load BEFORE app.js) -->
-  <script src="features/macros.js"></script>
-  <script src="features/hydration.js"></script>
-  <script src="features/progress-photos.js?v=2"></script>
-  <script src="features/pr-tracking.js"></script>
-  <script src="features/recovery.js"></script>
-  <script src="features/export-import.js"></script>
-  <script src="features/calorie-ai.js"></script>
+  <!-- Script modules with cache busting -->
+  <script src="features/macros.js?v=3"></script>
+  <script src="features/hydration-module.js?v=3"></script>
+  <script src="features/progress-photos.js?v=3"></script>
+  <script src="features/pr-tracking.js?v=3"></script>
+  <script src="features/recovery.js?v=3"></script>
+  <script src="features/export-import.js?v=3"></script>
+  <script src="features/calorie-ai.js?v=3"></script>
 
-  <!-- Core App Engine -->
-  <script src="app.js"></script>
-
+  <script src="app.js?v=3"></script>
 </body>
 </html>
