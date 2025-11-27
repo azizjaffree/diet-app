@@ -318,16 +318,26 @@ function setupVoiceInput(textarea, button) {
 function init() {
   log("Initializing FitTracker V4...");
 
-  // init modules (include CalorieAI)
-  [
-    Macros,
-    Hydration,
-    ProgressPhotos,
-    PRTracking,
-    Recovery,
-    ExportImport,
-    CalorieAI
-  ].forEach(m => m && m.init && m.init());
+  
+  const moduleNames = [
+    "Macros",
+    "Hydration",
+    "ProgressPhotos",
+    "PRTracking",
+    "Recovery",
+    "ExportImport",
+    "CalorieAI"
+  ];
+
+  moduleNames
+    .map(name => window[name])
+    .filter(m => Boolean(m) && typeof m.init === "function")
+    .forEach(m => {
+      try { m.init(); }
+      catch (err) { console.warn("Module init failed:", err); }
+    });
+
+
 
   // restore last view
   const last = FT.get("lastView", "food");
