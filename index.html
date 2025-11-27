@@ -1,102 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FitTracker V4 Clean</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitTracker V4</title>
+  <link rel="stylesheet" href="style.css">
 
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
+  <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d0d0d">
 </head>
-
 <body>
 
-<!-- ================= USER OVERLAY ================= -->
-<div id="userOverlay" class="overlay">
-  <div class="overlay-box">
-    <h2>Select User</h2>
-    <div class="user-select-row">
-      <button class="user-btn" data-user="Aziz">Aziz</button>
-      <button class="user-btn" data-user="Yasmin">Yasmin</button>
+  <!-- Header -->
+  <header id="header">
+    <div class="header-left">
+      <span class="user-label">User:</span>
+      <span class="username" id="username">Aziz</span>
     </div>
-  </div>
-</div>
-
-<!-- ================= TOP BAR ================= -->
-<header class="topbar glass">
-  <div class="profile-tag" id="profileTag">User: —</div>
-  <div class="top-right">
-    <input id="datePicker" type="date" />
-    <button id="openDrawer" class="menu-btn">☰</button>
-  </div>
-</header>
-
-<!-- ================= SIDE DRAWER ================= -->
-<div id="drawer" class="drawer">
-  <h3>Menu</h3>
-  <button class="drawer-item" id="switchUser">Switch user</button>
-  <button class="drawer-item" id="exportData">Export backup</button>
-  <button class="drawer-item" id="importData">Import JSON</button>
-  <button class="drawer-item" id="runMigration">Migrate v3 → v4</button>
-  <button class="drawer-item" id="resetData">Reset user</button>
-  <button class="drawer-item close" id="closeDrawer">Close</button>
-</div>
-
-<!-- ================= CONTENT WRAPPER ================= -->
-<main class="content">
-
-  <!-- ========== FOOD PAGE ========== -->
-  <section id="food" class="page active">
-    <h2 class="page-title">Food</h2>
-    <div id="foodContent"></div>
-  </section>
-
-  <!-- ========== EXERCISE PAGE ========== -->
-  <section id="exercise" class="page">
-    <h2 class="page-title">Exercise</h2>
-
-    <div class="exercise-controls">
-      <label>Difficulty:
-        <select id="difficultySelect">
-          <option value="beginner">Beginner</option>
-          <option value="moderate">Moderate</option>
-          <option value="advanced">Advanced</option>
-        </select>
-      </label>
-
-      <label class="auto-prog-label">
-        <input type="checkbox" id="autoProgression" />
-        Auto-progression
-      </label>
-
-      <span class="prog-info">Weeks 1–3 → Beginner • Weeks 4–6 → Moderate • Weeks 7–10 → Advanced</span>
+    <div class="header-right">
+      <span id="today-date"></span>
     </div>
+  </header>
 
-    <div id="exerciseContent"></div>
-  </section>
+  <!-- Main Dynamic Screen -->
+  <main id="screen"></main>
 
-  <!-- ========== ANALYSIS PAGE ========== -->
-  <section id="analysis" class="page">
-    <h2 class="page-title">Analysis</h2>
-    <div id="analysisContent"></div>
-  </section>
+  <!-- Floating Action Button (future: quick-add food) -->
+  <button id="fab-add" style="
+      position: fixed;
+      right: 16px;
+      bottom: calc(var(--nav-h) + 20px);
+      background: var(--accent);
+      color: white;
+      font-size: 24px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: none;
+  ">+</button>
 
-  <!-- ========== PROFILE PAGE ========== -->
-  <section id="profile" class="page">
-    <h2 class="page-title">Profile</h2>
-    <div id="profileContent"></div>
-  </section>
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav">
+    <div class="tab" id="tab-food" data-view="food">
+      🍽️ <span>Food</span>
+    </div>
+    <div class="tab" id="tab-exercise" data-view="exercise">
+      🏋️ <span>Exercise</span>
+    </div>
+    <div class="tab" id="tab-analysis" data-view="analysis">
+      📊 <span>Analysis</span>
+    </div>
+    <div class="tab" id="tab-profile" data-view="profile">
+      👤 <span>Profile</span>
+    </div>
+  </nav>
 
-</main>
+  <!-- Feature Modules (must load BEFORE app.js) -->
+  <script src="features/macros.js"></script>
+  <script src="features/hydration.js"></script>
+  <script src="features/progress-photos.js"></script>
+  <script src="features/pr-tracking.js"></script>
+  <script src="features/recovery.js"></script>
+  <script src="features/export-import.js"></script>
+  <script src="features/calorie-ai.js"></script>
 
-<!-- ================= BOTTOM NAV ================= -->
-<nav class="bottom-nav glass">
-  <button class="nav-btn active" data-tab="food">🍽<span>Food</span></button>
-  <button class="nav-btn" data-tab="exercise">🏋️<span>Exercise</span></button>
-  <button class="nav-btn" data-tab="analysis">📊<span>Analysis</span></button>
-  <button class="nav-btn" data-tab="profile">👤<span>Profile</span></button>
-</nav>
+  <!-- Core App Engine -->
+  <script src="app.js"></script>
 
-<script src="app.js"></script>
 </body>
 </html>
